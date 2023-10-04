@@ -28,7 +28,7 @@ WAVEFORM_FILE = dump.fsdb
 all: compile run
 
 compile:
-	$(SIMULATOR) -full64 $(SV_COMPILE_FLAGS) -top $(TOP_MODULE) -sverilog +fsdb
+	$(SIMULATOR) -full64 $(SV_COMPILE_FLAGS) -top $(TOP_MODULE) -sverilog +vcs +fsdbon -j8 -timescale=1ns/1ps
 
 run:
 	./simv $(SIMULATION_FLAGS) | tee $(LOG_FILE)
