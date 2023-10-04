@@ -11,10 +11,10 @@ SIMULATOR = vcs# Replace with your simulator (e.g., ModelSim, VCS)
 # Source files
 RTL_FILES = filelist.f
 TB_FILES = testlist.f 
-TOP_MODULE = ahb_sram
+TOP_MODULE = top_tb 
 
 # Compilation options
-SV_COMPILE_FLAGS = -F $(RTL_FILES) $(TB_FILES) +define+SIMULATION
+SV_COMPILE_FLAGS = -F $(RTL_FILES) -F $(TB_FILES) +define+SIMULATION
 
 # Simulation options
 SIMULATION_FLAGS = +access+r +define+DEBUG
@@ -28,7 +28,7 @@ WAVEFORM_FILE = dump.fsdb
 all: compile run
 
 compile:
-	$(SIMULATOR) -full64 $(SV_COMPILE_FLAGS) -top $(TOP_MODULE)
+	$(SIMULATOR) -full64 $(SV_COMPILE_FLAGS) -top $(TOP_MODULE) -sverilog +fsdb
 
 run:
 	./simv $(SIMULATION_FLAGS) | tee $(LOG_FILE)

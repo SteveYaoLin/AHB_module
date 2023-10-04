@@ -250,6 +250,5 @@ module ahb_master #(
     end
     endfunction
 
-    `include "ahb_transaction_tasks.v"
-
+    `include "./test/ahb_transaction_tasks.v"
 endmodule

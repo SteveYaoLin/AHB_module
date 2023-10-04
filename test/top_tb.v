@@ -11,6 +11,7 @@
 //
 //------------------------------------------------------------------------------
 `timescale 1ns / 1ps
+//`include "./test/ahb_transaction_tasks.v"
 
 module top_tb();
     //----------------------------------
@@ -54,7 +55,6 @@ module top_tb();
         repeat(5) @(posedge HCLK);
         HRESETn = 1'b1;
     end
-
     ahb_master #(
         .START_ADDR                 (32'h0),
         .DEPTH_IN_BYTES             (SIZE_IN_BYTES)
@@ -95,17 +95,19 @@ module top_tb();
         .HREADYOUT                  (HREADYOUT)
     );
 
-`ifdef VCS
-    initial begin
-        $fsdbDumpfile("top_tb.fsdb");
-        $fsdbDumpvars;
-    end
-
-    initial begin
-    `ifdef DUMP_VPD
-        $vcdpluson();
-    `endif
-    end
-`endif
+//`ifdef VCS
+//    initial begin
+//        $fsdbDumpfile("top_tb.fsdb");
+//        $fsdbDumpvars;
+//    end
+//
+//    initial begin
+//    `ifdef DUMP_VPD
+//        $vcdpluson();
+//    `endif
+//    end
+//`endif
 
 endmodule
+
+
