@@ -28,10 +28,20 @@ WAVEFORM_FILE = dump.fsdb
 all: compile run
 
 compile:
-	$(SIMULATOR) -full64 $(SV_COMPILE_FLAGS) -top $(TOP_MODULE) -sverilog +vcs +fsdbon -j8 -timescale=1ns/1ps
-
+		$(SIMULATOR) -sverilog \
+				+vcs+lic+wait \
+	    		+libext+.v+.vlib+.vh+.vs \
+                -full64 -debug_acc+all\
+				-F $(RTL_FILES) \
+				-F $(TB_FILES)\
+				-o simv \
+				-top $(TOP_MODULE)
 run:
-	./simv $(SIMULATION_FLAGS) | tee $(LOG_FILE)
+	./simv \
+		+fsdb+function \
+		-ucli -i test/run.tcl \
+		-l $(LOG_FILE)\
+	#./simv $(SIMULATION_FLAGS) | tee $(LOG_FILE)
 
 clean:
 	rm -rf simv csrc $(LOG_FILE) $(WAVEFORM_FILE)
